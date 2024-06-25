@@ -50,7 +50,14 @@ html, body, #root {
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
+.main-header {
+  color: #1d6aee; /* Example color */
+  text-wrap: #61dafb;
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2.5rem; /* Adjust the font size if needed */
+  font-family: 'Roboto', sans-serif; /* Example font family */
+}
 .App-header {
   background-color: #72819f;
   min-height: 100vh;

@@ -10,7 +10,7 @@ function App() {
 
     return (
         <div className="App">
-            <h1>Tik Tok Jam</h1>
+            <h1 className="main-header">Tik Tok Jam</h1>
             <div className="content-container">
                 <MediaUpload />
                 <HandleLink />
