@@ -1,8 +1,16 @@
+.HandleLinkContainer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease-in-out;
+}
+
 .HandleLink {
     display: flex;
     flex-direction: column;
-    align-items:center;
-    justify-content:flex;
+    align-items: center;
+    justify-content: center;
     width: 50vw;  /* Responsive width */
     max-width: 500px;  /* Maximum width */
     padding: 20px;
@@ -13,6 +21,25 @@
     font-family: 'Roboto', sans-serif; /* Set font family */
     font-weight: 400; /* Normal weight for the whole container */
     z-index: 10; /* Ensure this is on top */
+}
+
+.uploadedLinkContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    transition: transform 0.3s ease-in-out;
+}
+
+.uploadedLinkContainer .video-container {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.uploadedLinkContainer .video-container iframe {
+    width: 100%;
+    height: 400px;
+    border-radius: 10px;
 }
 
 .HandleLink input {
@@ -43,17 +70,4 @@
 .HandleLink .error {
     color: red;
     margin-top: 10px;
-}
-.HandleLink button:hover {
-    background-color: #EE1D52;
-}
-.video-container {
-    width: 100%;
-    margin-top: 20px;
-}
-
-.video-container iframe {
-    width: 100%;
-    height: 400px;
-    border-radius: 10px;
 }

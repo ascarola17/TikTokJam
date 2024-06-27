@@ -46,10 +46,10 @@ function HandleLink() {
     };
 
     return (
-        <div className="HandleLink">
+        <div className="HandleLinkContainer">
             {!isUploaded ? (
-                <form onSubmit={handleSubmit}>
-                    <h1></h1> 
+                <form onSubmit={handleSubmit} className="HandleLink">
+                    <h1>Enter TikTok Link</h1>
                     <input 
                         type="text" 
                         placeholder="Enter TikTok video link" 
@@ -60,20 +60,19 @@ function HandleLink() {
                     {isUploading && <p>Uploading...</p>}
                 </form>
             ) : (
-                <button onClick={handleStartOver}>Start Over</button>
-            )}
-            {uploadedLink && (
-                <div className="video-container">
-                    <iframe
-                        src={uploadedLink}
-                        frameBorder="0"
-                        allow="autoplay; encrypted-media"
-                        allowFullScreen
-                        title="TikTok Video"
-                    ></iframe>
+                <div className="uploadedLinkContainer">
+                    <button onClick={handleStartOver}>Start Over</button>
+                    <div className="video-container">
+                        <iframe
+                            src={uploadedLink}
+                            frameBorder="0"
+                            allow="autoplay; encrypted-media"
+                            allowFullScreen
+                            title="TikTok Video"
+                        ></iframe>
+                    </div>
                 </div>
             )}
-            {error && <p className="error">{error.message}</p>}
         </div>
     );
 }
