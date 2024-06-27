@@ -1,0 +1,103 @@
+/* src/ProgressCards.css */
+body {
+    background-color: #100e17;
+    font-family: 'Open Sans', sans-serif;
+  }
+  
+  .container {
+    width: 100%;
+    display: flex;
+    justify-content: space-around; /* Distribute space between cards */
+    padding: 20px; /* Add some padding for spacing */
+    box-sizing: border-box;
+  }
+  
+  .card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 350px; /* Increase height */
+    width: calc(25% - 10px); /* Increase width to fill screen, adjust as needed */
+    background-color: #17141d;
+    border-radius: 10px;
+    box-shadow: -1rem 0 3rem #EE1D52;
+    transition: 0.4s ease-out;
+    position: relative;
+  }
+  
+  .card:not(:first-child) {
+    margin-left: 0; /* No negative margin needed with space-around */
+  }
+  
+  .card:hover {
+    transform: translateY(-20px);
+    transition: 0.4s ease-out;
+  }
+  
+  .card:hover ~ .card {
+    position: relative;
+    left: 0; /* No need to move cards to the right */
+    transition: 0.4s ease-out;
+  }
+  
+  .title {
+    color: white;
+    font-weight: 300;
+    margin-top: 15px;
+    font-size: 1.5rem; /* Increase font size */
+  }
+
+  .btn {
+    font-family: Arial, Helvetica, sans-serif;
+    text-transform: uppercase;
+  } 
+   
+  .btn:hover .btn-slide-show-text1 {
+    margin-left: 65px;
+  } 
+   
+  .fill-center {
+    left: 0px;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 8px;
+    height: 50px;
+    width: 180px;
+    padding: 0px;
+    outline: currentcolor;
+    overflow: hidden;
+    transition: color 0.3s ease-out 0.1s;
+    background: none;
+  } 
+   
+  .fill-center::before {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    margin: auto;
+    text-align: center;
+    content: "";
+    border-radius: 50%;
+    display: block;
+    width: 20em;
+    height: 20em;
+    line-height: 20em;
+    left: -3em;
+    transition: box-shadow 0.5s ease-out 0s;
+    z-index: -1;
+  } 
+   
+  .fill-center:hover {
+    color: rgb(255, 255, 255);
+    background: none;
+  } 
+   
+  .fill-center--red {
+    border: 1px solid rgb(240, 45, 68);
+    color: rgb(240, 45, 68);
+  } 
+   
+  .fill-center--red:hover::before {
+    box-shadow: rgb(240, 45, 68) 0px 0px 0px 11em inset;
+  } 
