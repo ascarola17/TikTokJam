@@ -1,68 +1,87 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 import './MediaUpload.css';
 
-function MediaUpload() {
-    const [file, setFile] = useState([]);
+function MediaUpload({ hidden, onUploadComplete }) {
+    const [file, setFile] = useState(null);
     const [uploadProgress, setUploadProgress] = useState(0);
     const [uploadedFileURL, setUploadedFileURL] = useState('');
-    const [error,setError] = useState();
+    const [error, setError] = useState(null);
     const [isUploading, setIsUploading] = useState(false);
+    const [isUploaded, setIsUploaded] = useState(false); // Track if the upload is complete
 
     function handleChange(event) {
-        setFile(event.target.files[0])
+        setFile(event.target.files[0]);
+        setIsUploaded(false); // Reset the uploaded state if a new file is selected
     }
-    function handleSubmit(event){
+
+    function handleSubmit(event) {
         event.preventDefault();
         if (!file) {
             setError(new Error('No file selected.'));
             return;
         }
-        setIsUploading(true); // Set upload status to true
-        const url = 'http://localhost:3000/api/upload/'
-        const formData = new FormData();
-        formData.append('file','file');
-        formData.append('fileName',file.name);
 
-        const config ={
-            headers: {
-                'content-type':'multipart/form-data',
-            },
-            onUploadProgress: function(progressEvent){
-                const percentCompleted =Math.round((progressEvent.loaded * 100) / progressEvent.total);
-                
-            }
-        };
-        axios.post(url,formData, config).then((response) => {
-            console.log(response.data);
-            setUploadedFileURL(response.data.fileUrl); // Adjust based on your backend response
-            setIsUploading(false);
-        })
-        .catch((error) => {
-            console.error("Error uploading file: ", error);
-            setError(error);
-            setIsUploading(false);
-          });
-    
+        setIsUploading(true);
+        setUploadProgress(0);
+
+        // Simulate a file upload
+        setTimeout(() => {
+            // Mock progress
+            const interval = setInterval(() => {
+                setUploadProgress(prevProgress => {
+                    if (prevProgress >= 100) {
+                        clearInterval(interval);
+                        return 100;
+                    }
+                    return prevProgress + 10;
+                });
+            }, 100);
+
+            // Simulate backend response
+            setTimeout(() => {
+                clearInterval(interval);
+                setIsUploading(false);
+                setIsUploaded(true); // Mark upload as complete
+                setUploadedFileURL(URL.createObjectURL(file)); // Set video URL after "upload"
+                setUploadProgress(100);
+                onUploadComplete(); // Notify parent component
+            }, 1000);
+        }, 100);
+    }
+
+    function handleStartOver() {
+        setFile(null);
+        setUploadedFileURL('');
+        setUploadProgress(0);
+        setError(null);
+        setIsUploading(false);
+        setIsUploaded(false);
+    }
+
+    if (hidden) {
+        return null; // Do not render if hidden
     }
 
     return (
         <div className="MediaUpload">
-            <form onSubmit ={handleSubmit}>
-                <h1>Upload Media</h1>
-                <input type='file' onChange={handleChange}/>
-                <button type = "submit">Upload</button>
-                {isUploading && <progress value={uploadProgress} max="100"></progress>} {/* Conditionally render progress bar */}
-            </form> 
+            {!isUploaded ? (
+                <form onSubmit={handleSubmit}>
+                    <h1>Upload Media</h1>
+                    <input type="file" onChange={handleChange} />
+                    <button type="submit" disabled={isUploading}>Upload</button>
+                    {isUploading && <progress value={uploadProgress} max="100"></progress>}
+                </form>
+            ) : (
+                <button onClick={handleStartOver}>Start Over</button>
+            )}
             {uploadedFileURL && (
-            <div className="video-container">
-                <video src={uploadedFileURL} controls loop autoPlay />
-            </div>
-     )}
-     {error && <p>Error uploading file: {error.message}</p>}
- </div>
-);
+                <div className="video-container">
+                    <video src={uploadedFileURL} controls loop autoPlay />
+                </div>
+            )}
+            {error && <p>Error uploading file: {error.message}</p>}
+        </div>
+    );
 }
-
 
 export default MediaUpload;

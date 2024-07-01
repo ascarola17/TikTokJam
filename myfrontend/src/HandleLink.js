@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './HandleLink.css';
 
-function HandleLink() {
+function HandleLink({ onUploadComplete }) {
     const [link, setLink] = useState('');
     const [isUploading, setIsUploading] = useState(false);
     const [isUploaded, setIsUploaded] = useState(false);
@@ -34,6 +34,7 @@ function HandleLink() {
             setIsUploading(false);
             setIsUploaded(true);
             setUploadedLink(`https://www.tiktok.com/embed/v2/${videoId}`);
+            onUploadComplete(); // Notify parent component
         }, 1000); // Simulate a delay for "uploading"
     };
 
@@ -49,7 +50,7 @@ function HandleLink() {
         <div className="HandleLinkContainer">
             {!isUploaded ? (
                 <form onSubmit={handleSubmit} className="HandleLink">
-                    <h1>Enter TikTok Link</h1>
+                    <h3>or</h3>
                     <input 
                         type="text" 
                         placeholder="Enter TikTok video link" 
@@ -73,6 +74,7 @@ function HandleLink() {
                     </div>
                 </div>
             )}
+            {error && <p className="error">{error.message}</p>}
         </div>
     );
 }
