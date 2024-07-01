@@ -20,13 +20,21 @@ html, body, #root {
   box-sizing: border-box;
 }
 
+.main-container {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 1200px; /* Adjust as necessary */
+  justify-content: center; /* Center the main container */
+}
+
 .content-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
-  max-width: 800px;
-  margin-bottom: 40px; /* Add space below content container */
+  width: 60%; /* Adjust as necessary */
+  margin-bottom: 80px; /* Increase space below content container */
+  position: relative; /* Allow positioning of the button */
 }
 
 .MediaUpload {
@@ -35,6 +43,26 @@ html, body, #root {
 
 .HandleLink {
   width: 100%;
+}
+
+.screenshot-button-container {
+  position: absolute;
+  top: 35%;
+  right: 370px; /* Adjust as necessary to position the button */
+  transform: translateY(-50%);
+}
+
+.screenshot-button {
+  padding: 10px 20px;
+  background-color: #EE1D52;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.screenshot-button:hover {
+  background-color: #ff4066;
 }
 
 .main-header {
@@ -46,41 +74,82 @@ html, body, #root {
 }
 
 h2 {
-  margin: 20px 0;
+  margin: 40px 0; /* Increase margin to add more space above and below h2 */
+  color: white;
 }
 
-/* Adjust margin-top to push progress cards down */
+/* Adjust margin-top to push product result section down */
+.main-product-result {
+  margin-top: 300px; /* Ensure there's space above the main product result */
+}
+
+/* Container for ImageReveal and ProgressCards */
+.image-and-cards-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.image-container {
+  width: 100%;
+  text-align: center; /* Center all text within the image container */
+  margin-bottom: 40px; /* Add space between image and progress cards */
+}
+
+.revealing-image {
+  width: 100%;
+  height: auto;
+  opacity: 1; /* Ensure image is visible */
+  clip-path: inset(0% 0% 0% 0%); /* Reset clip-path to ensure it doesn't affect layout */
+  transition: opacity 0.5s ease-out, clip-path 0.5s ease-out;
+  margin-top: 40px; /* Ensure there's space above */
+  margin-bottom: 40px; /* Ensure there's space below */
+}
+
+.other-products {
+  text-align: center; /* Ensure the h2 text is centered */
+}
+
 .progress-cards-container {
   width: 100%;
   display: flex;
-  justify-content: center;
-  margin-top: 40px;
+  justify-content: space-around; /* Distribute space between cards */
+  padding: 20px; /* Add some padding for spacing */
+  box-sizing: border-box;
+  margin-top: 20px; /* Ensure there's space above the progress cards */
 }
 
-h2.main-product-result {
-  margin-top: 60px; /* Add more space above this h2 */
+.screenshot-container {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.screenshot-container img {
+  max-width: 100%;
+  height: auto;
+  border: 2px solid #61dafb;
+  border-radius: 5px;
+}
+
+.selection-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.25);
+  cursor: crosshair;
+  z-index: 1000;
+}
+
+.selection-box {
+  position: absolute;
+  border: 2px dashed #61dafb;
+  background: rgba(97, 218, 251, 0.25);
+  z-index: 1001;
 }
 
 .App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.App-link {
-  color: #61dafb;
+  height: 40vmin
 }
