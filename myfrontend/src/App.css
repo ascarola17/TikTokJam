@@ -22,34 +22,49 @@ html, body, #root {
 
 .main-container {
   display: flex;
-  align-items: flex-start;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
-  max-width: 1200px; /* Adjust as necessary */
-  justify-content: center; /* Center the main container */
+  max-width: 1200px;
+  justify-content: center;
 }
 
 .content-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 60%; /* Adjust as necessary */
-  margin-bottom: 80px; /* Increase space below content container */
-  position: relative; /* Allow positioning of the button */
+  width: 60%;
+  margin-bottom: 80px;
+  position: relative;
 }
 
-.MediaUpload {
-  margin-bottom: 20px;
-}
-
-.HandleLink {
+.snipping-tool-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
 }
 
-.screenshot-button-container {
-  position: absolute;
-  top: 35%;
-  right: 370px; /* Adjust as necessary to position the button */
-  transform: translateY(-50%);
+.video-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 20px; /* Ensure there's space below the video */
+}
+
+.box-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.button-container {
+  align-self: flex-end;
+  margin-right: 20px;
 }
 
 .screenshot-button {
@@ -71,19 +86,18 @@ html, body, #root {
   margin-bottom: 20px;
   font-size: 2.5rem;
   font-family: 'Roboto', sans-serif;
+  text-shadow: #EE1D52;
 }
 
 h2 {
-  margin: 40px 0; /* Increase margin to add more space above and below h2 */
+  margin: 40px 0;
   color: white;
 }
 
-/* Adjust margin-top to push product result section down */
 .main-product-result {
-  margin-top: 300px; /* Ensure there's space above the main product result */
+  margin-top: 300px;
 }
 
-/* Container for ImageReveal and ProgressCards */
 .image-and-cards-container {
   width: 100%;
   display: flex;
@@ -93,31 +107,31 @@ h2 {
 
 .image-container {
   width: 100%;
-  text-align: center; /* Center all text within the image container */
-  margin-bottom: 40px; /* Add space between image and progress cards */
+  text-align: center;
+  margin-bottom: 40px;
 }
 
 .revealing-image {
   width: 100%;
   height: auto;
-  opacity: 1; /* Ensure image is visible */
-  clip-path: inset(0% 0% 0% 0%); /* Reset clip-path to ensure it doesn't affect layout */
+  opacity: 1;
+  clip-path: inset(0% 0% 0% 0%);
   transition: opacity 0.5s ease-out, clip-path 0.5s ease-out;
-  margin-top: 40px; /* Ensure there's space above */
-  margin-bottom: 40px; /* Ensure there's space below */
+  margin-top: 40px;
+  margin-bottom: 40px;
 }
 
 .other-products {
-  text-align: center; /* Ensure the h2 text is centered */
+  text-align: center;
 }
 
 .progress-cards-container {
   width: 100%;
   display: flex;
-  justify-content: space-around; /* Distribute space between cards */
-  padding: 20px; /* Add some padding for spacing */
+  justify-content: space-around;
+  padding: 20px;
   box-sizing: border-box;
-  margin-top: 20px; /* Ensure there's space above the progress cards */
+  margin-top: 20px;
 }
 
 .screenshot-container {
@@ -151,5 +165,19 @@ h2 {
 }
 
 .App-logo {
-  height: 40vmin
+  height: 40vmin;
+}
+
+.start-over-button {
+  padding: 10px 20px;
+  background-color: #1d6aee;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.start-over-button:hover {
+  background-color: #3b8ad9;
 }
