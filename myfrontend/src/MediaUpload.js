@@ -19,7 +19,7 @@ function MediaUpload({ hidden, onUploadComplete }) {
 
     function handleStartOver() {
         setFile(null);
-        setUploadedFileURL('http://localhost:3000/api/screenshot');
+        setUploadedFileURL('http://localhost:3000/upload');
         setError(null);
     }
 
