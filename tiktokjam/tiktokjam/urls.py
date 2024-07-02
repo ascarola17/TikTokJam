@@ -25,4 +25,8 @@ router.register(r'items', ItemViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
+    path('', include("mytiktok.urls")),
 ]
+
+#curl -X POST -F "image=@C:\Users\junio\OneDrive\Pictures\Images-for-timtok\shoes.jpg" http://127.0.0.1:8000/images/
+# - curl prompt
