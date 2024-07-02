@@ -145,8 +145,8 @@ h2 {
 
 .selection-box {
   position: absolute;
-  border: 2px dashed #61dafb;
-  background: rgba(97, 218, 251, 0.25);
+  border: 2px dashed #000000;
+  background: rgba(228, 233, 234, 0);
   z-index: 1001;
 }
 
