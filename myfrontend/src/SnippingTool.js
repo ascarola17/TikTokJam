@@ -62,21 +62,36 @@ function SnippingTool({ videoContainerRef, videoSource }) {
             logging: true,
             useCORS: true,
         }).then((canvas) => {
-            const dataUrl = canvas.toDataURL('image/png');
-            setScreenshot(dataUrl);
+            canvas.toBlob((blob) => {
+                const file = new File([blob], 'screenshot.png', { type: 'image/png' });
+                setScreenshot(URL.createObjectURL(file));
+                sendScreenshotToBackend(file);
+            }, 'image/png');
         }).catch((error) => {
             console.error('Screenshot capture failed', error);
         });
     };
-    const sendScreenshotToBackend = (dataUrl) => {
-        axios.post('YOUR_BACKEND_ENDPOINT', { image: dataUrl })
-            .then(response => {
-                console.log('Image successfully sent to backend:', response.data);
-            })
-            .catch(error => {
-                console.error('Error sending image to backend:', error);
-            });
+
+    const sendScreenshotToBackend = (file) => {
+        const formData = new FormData();
+        formData.append('image', file);  // Ensure key name matches backend
+
+        // Log the FormData to ensure it contains the expected data
+        for (let pair of formData.entries()) {
+            console.log(pair[0]+ ', ' + pair[1]); 
+        }
+
+        axios.post('http://localhost:8000/api/upload/', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }).then(response => {
+            console.log('Image successfully sent to backend:', response.data);
+        }).catch(error => {
+            console.error('Error sending image to backend:', error);
+        });
     };
+
     const initiateScreenshotMode = () => {
         setIsScreenshotMode(true);
     };

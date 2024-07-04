@@ -1,9 +1,6 @@
-from django.shortcuts import render
-from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import ImageUploadSerializer
-from .models import ImageCaptionGenerator
 from rest_framework import viewsets
 from .models import Item
 from .serializers import ItemSerializer
@@ -13,24 +10,33 @@ class ItemViewSet(viewsets.ModelViewSet):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
 
-class ImageCaptionView(APIView):
-    def post(self, request, *args, **kwargs):
+'''
+Description: A generic viewset model to manipulation and permanently save
+image data to the database
+'''
+class ImageUploadViewSet(viewsets.ViewSet):
+    '''
+    Description: Retrieves image data from the front and check validity. 
+    If valid, then the image will save in a directory called 'media'
+    '''
+    def create(self, request):
+        print("Incoming request data:", request.data)
         serializer = ImageUploadSerializer(data=request.data)
         if serializer.is_valid():
             image = serializer.validated_data['image']
+            #print(serializer)
             
             # Ensure the temp directory exists
-            temp_dir = "temp"
+            temp_dir = os.path.join('media') #may remove temp
             if not os.path.exists(temp_dir):
                 os.makedirs(temp_dir)
             
+            # Save the image to the temp directory
             image_path = os.path.join(temp_dir, image.name)
             with open(image_path, 'wb+') as destination:
                 for chunk in image.chunks():
                     destination.write(chunk)
 
-            caption_generator = ImageCaptionGenerator()
-            pixel_values = caption_generator.prepare_image(image_path)
-            caption = caption_generator.generate_caption(pixel_values)
-            return Response({"caption": caption}, status=status.HTTP_200_OK)
+            return Response({"message": "Image uploaded successfully"}, status=status.HTTP_201_CREATED)
+        print(serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -17,16 +17,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from mytiktok.views import ItemViewSet
+from mytiktok.views import ItemViewSet, ImageUploadViewSet
+from django.conf import settings
+from django.conf.urls.static import static
 
 router = DefaultRouter()
 router.register(r'items', ItemViewSet)
+router.register(r'upload', ImageUploadViewSet, basename='imageupload')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
-    path('', include("mytiktok.urls")),
-]
-
-#curl -X POST -F "image=@C:\Users\junio\OneDrive\Pictures\Images-for-timtok\shoes.jpg" http://127.0.0.1:8000/images/
-# - curl prompt
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
