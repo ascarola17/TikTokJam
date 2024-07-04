@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import html2canvas from 'html2canvas';
+import axios from 'axios';
 
 function SnippingTool({ videoContainerRef, videoSource }) {
     const [screenshot, setScreenshot] = useState(null);
@@ -61,10 +62,28 @@ function SnippingTool({ videoContainerRef, videoSource }) {
             width,
             height,
         }).then((canvas) => {
-            const dataUrl = canvas.toDataURL('image/png');
-            setScreenshot(dataUrl);
+            canvas.toBlob((blob) => {
+                const url = URL.createObjectURL(blob);
+                setScreenshot(url);
+                sendScreenshotToBackend(blob);
+            }, 'image/png');
         }).catch((error) => {
             console.error('Screenshot capture failed', error);
+        });
+    };
+
+    const sendScreenshotToBackend = (blob) => {
+        const formData = new FormData();
+        formData.append('screenshot', blob, 'screenshot.png');
+
+        axios.post('http://localhost:8000/upload/', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }).then(response => {
+            console.log('Image successfully sent to backend:', response.data);
+        }).catch(error => {
+            console.error('Error sending image to backend:', error);
         });
     };
 

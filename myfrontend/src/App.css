@@ -87,7 +87,7 @@ html, body, #root {
   margin-bottom: 20px;
   font-size: 2.5rem;
   font-family: 'Roboto', sans-serif;
-  text-shadow: #EE1D52;
+  text-rendering:geometricPrecision;
 }
 
 h2 {
