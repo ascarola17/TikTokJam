@@ -15,7 +15,8 @@ function HandleLink({ onUploadComplete }) {
             return;
         }
         setError(null);
-        onUploadComplete(url);
+        const embedUrl = getEmbedUrl(url);
+        onUploadComplete(embedUrl);
     };
 
     const isValidUrl = (string) => {
@@ -25,6 +26,11 @@ function HandleLink({ onUploadComplete }) {
         } catch (_) {
             return false;
         }
+    };
+
+    const getEmbedUrl = (url) => {
+        const urlObj = new URL(url);
+        return `https://www.tiktok.com/embed/${urlObj.pathname.split('/').filter(Boolean).pop()}`;
     };
 
     return (

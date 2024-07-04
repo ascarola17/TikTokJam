@@ -43,8 +43,8 @@ function SnippingTool({ videoContainerRef, videoSource }) {
 
         const rect = containerElement.getBoundingClientRect();
         const { startX, startY, endX, endY } = selection;
-        const x = Math.max(rect.left, Math.min(startX, endX)) - rect.left;
-        const y = Math.max(rect.top, Math.min(startY, endY)) - rect.top;
+        const x = Math.max(0, Math.min(startX, endX) - rect.left);
+        const y = Math.max(0, Math.min(startY, endY) - rect.top);
         const width = Math.min(rect.width, Math.abs(endX - startX));
         const height = Math.min(rect.height, Math.abs(endY - startY));
 
@@ -53,13 +53,13 @@ function SnippingTool({ videoContainerRef, videoSource }) {
             return;
         }
 
+        console.log('Selection coordinates:', { x, y, width, height });
+
         html2canvas(containerElement, {
             x,
             y,
             width,
             height,
-            logging: true,
-            useCORS: true,
         }).then((canvas) => {
             const dataUrl = canvas.toDataURL('image/png');
             setScreenshot(dataUrl);
@@ -72,14 +72,31 @@ function SnippingTool({ videoContainerRef, videoSource }) {
         setIsScreenshotMode(true);
     };
 
+    const isTikTokUrl = (url) => {
+        const pattern = /https:\/\/(www\.)?tiktok\.com/;
+        return pattern.test(url);
+    };
+
     return (
         <div className="snipping-tool-container">
             <div className="video-container" ref={videoContainerRef}>
                 {videoSource && (
-                    <video controls width="400">
-                        <source src={videoSource} type="video/mp4" />
-                        Your browser does not support the video tag.
-                    </video>
+                    isTikTokUrl(videoSource) ? (
+                        <iframe
+                            src={videoSource}
+                            width="400"
+                            height="500"
+                            frameBorder="0"
+                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                            title="TikTok Video"
+                        ></iframe>
+                    ) : (
+                        <video controls width="400">
+                            <source src={videoSource} type="video/mp4" />
+                            Your browser does not support the video tag.
+                        </video>
+                    )
                 )}
             </div>
             <div className="box-container">
