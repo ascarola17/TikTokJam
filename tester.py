@@ -1,9 +1,8 @@
-from django.shortcuts import render
+#in views.py
 
+from django.shortcuts import render
 # Create your views here.
 from rest_framework import viewsets
-from .models import Item
-from .serializers import ItemSerializer
 
 from django.http import JsonResponse
 import io
@@ -13,7 +12,7 @@ from . import views
 
 
 from django.views import View
-#from .utils import load_model_and_tokenizer, process_image, generate_caption
+from .utils import load_model_and_tokenizer, process_image, generate_caption
 
 
 @csrf_exempt
@@ -52,34 +51,16 @@ def analyze_image(request):
         'colors': colors
     })
 
+#in mytiktokapp urls.py
 
-
-
-class ItemViewSet(viewsets.ModelViewSet):
-    queryset = Item.objects.all()
-    serializer_class = ItemSerializer
-
-class ImageCaptionView(View):
-    def get(self, request):
-        # Get the image URL from the request
-        image_url = request.GET.get('image_url')
-        if not image_url:
-            return JsonResponse({'error': 'No image URL provided'}, status=400)
-
-        # Load model and tokenizer
-        tokenizer, model = load_model_and_tokenizer()
-
-        # Process the image
-        image_tensor = process_image(image_url)
-
-        # Generate the caption
-        caption = generate_caption(image_tensor, tokenizer, model)
-
-        # Convert sets to lists if needed
-        if isinstance(caption, set):
-            caption = list(caption)
-
-        # Return the caption as JSON
-        return JsonResponse({'caption': caption}, safe=False)
+urlpatterns = [
+    #path('caption/', ImageCaptionView.as_view(), name='image-caption'),
     
+    path('analyze/', analyze_image.as_view(), name='analyze_image'), #<- google path 
+]
 
+
+#in tiktokjam settings.py
+
+
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r"C:\Users\Admin\Desktop\AI_EDGE\snap-market-428419-cf3dcb6ba810.json"
