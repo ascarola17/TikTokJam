@@ -1,4 +1,3 @@
-/* Add the provided App.css content */
 html, body, #root {
   height: 100%;
   margin: 0;
@@ -63,11 +62,6 @@ html, body, #root {
   align-items: center;
 }
 
-.button-container {
-  align-self: flex-end;
-  margin-right: 20px;
-}
-
 .screenshot-button {
   padding: 10px 20px;
   background-color: #EE1D52;
@@ -81,18 +75,75 @@ html, body, #root {
   background-color: #ff4066;
 }
 
+.button-container {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.confirm-button {
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.confirm-button:hover {
+  background-color: #218838;
+}
+
+.selection-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.25);
+  cursor: crosshair;
+  z-index: 1000;
+}
+
+.selection-box {
+  position: absolute;
+  border: 2px dashed #000;
+  background: rgba(255, 255, 255, 0.5);
+  z-index: 1001;
+}
+
+.screenshot-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.screenshot-container img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.error {
+  color: red;
+  margin-top: 10px;
+}
+
 .main-header {
   color: #1d6aee;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 55px;
   font-size: 2.5rem;
   font-family: 'Roboto', sans-serif;
-  text-rendering:geometricPrecision;
+  text-rendering: geometricPrecision;
 }
 
 h2 {
-  margin: 40px 0;
+  margin: 20px 0;
   color: white;
+  text-align: center;
 }
 
 .main-product-result {
@@ -133,54 +184,4 @@ h2 {
   padding: 20px;
   box-sizing: border-box;
   margin-top: 20px;
-}
-
-.selection-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.25);
-  cursor: crosshair;
-  z-index: 1000;
-}
-
-.selection-box {
-  position: absolute;
-  border: 2px dashed #000;
-  background: rgba(255, 255, 255, 0.5);
-  z-index: 1001;
-}
-
-.video-container {
-  position: relative;
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.screenshot-container img {
-  max-width: 100%;
-  height: auto;
-  border: 2px solid #61dafb;
-  border-radius: 5px;
-}
-
-.App-logo {
-  height: 40vmin;
-}
-
-.start-over-button {
-  padding: 10px 20px;
-  background-color: #1d6aee;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 20px;
-}
-
-.start-over-button:hover {
-  background-color: #3b8ad9;
 }

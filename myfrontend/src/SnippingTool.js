@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import html2canvas from 'html2canvas';
 import axios from 'axios';
 
-function SnippingTool({ videoContainerRef, videoSource }) {
+function SnippingTool({ videoContainerRef, videoSource, onScreenshotComplete }) {
     const [screenshot, setScreenshot] = useState(null);
     const [isSelecting, setIsSelecting] = useState(false);
     const [selection, setSelection] = useState({ startX: 0, startY: 0, endX: 0, endY: 0 });
     const [isScreenshotMode, setIsScreenshotMode] = useState(false);
+    const [isConfirmVisible, setIsConfirmVisible] = useState(false);
 
     const startSelection = (e) => {
         if (!isScreenshotMode) return;
@@ -31,6 +32,7 @@ function SnippingTool({ videoContainerRef, videoSource }) {
     const endSelection = () => {
         setIsSelecting(false);
         setIsScreenshotMode(false);
+        setIsConfirmVisible(true); // Show confirm button after selection
         captureSelection();
     };
 
@@ -65,11 +67,30 @@ function SnippingTool({ videoContainerRef, videoSource }) {
             canvas.toBlob((blob) => {
                 const url = URL.createObjectURL(blob);
                 setScreenshot(url);
-                sendScreenshotToBackend(blob);
+                // Do not send the screenshot to the backend here
             }, 'image/png');
         }).catch((error) => {
             console.error('Screenshot capture failed', error);
         });
+    };
+
+    const confirmSelection = () => {
+        if (screenshot) {
+            const containerElement = videoContainerRef.current;
+            html2canvas(containerElement, {
+                x: selection.startX,
+                y: selection.startY,
+                width: selection.endX - selection.startX,
+                height: selection.endY - selection.startY,
+            }).then((canvas) => {
+                canvas.toBlob((blob) => {
+                    sendScreenshotToBackend(blob);
+                    onScreenshotComplete(); // Call the onScreenshotComplete prop
+                }, 'image/png');
+            }).catch((error) => {
+                console.error('Screenshot capture failed', error);
+            });
+        }
     };
 
     const sendScreenshotToBackend = (blob) => {
@@ -91,31 +112,14 @@ function SnippingTool({ videoContainerRef, videoSource }) {
         setIsScreenshotMode(true);
     };
 
-    const isTikTokUrl = (url) => {
-        const pattern = /https:\/\/(www\.)?tiktok\.com/;
-        return pattern.test(url);
-    };
-
     return (
         <div className="snipping-tool-container">
             <div className="video-container" ref={videoContainerRef}>
                 {videoSource && (
-                    isTikTokUrl(videoSource) ? (
-                        <iframe
-                            src={videoSource}
-                            width="400"
-                            height="500"
-                            frameBorder="0"
-                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                            allowFullScreen
-                            title="TikTok Video"
-                        ></iframe>
-                    ) : (
-                        <video controls width="400">
-                            <source src={videoSource} type="video/mp4" />
-                            Your browser does not support the video tag.
-                        </video>
-                    )
+                    <video controls width="400">
+                        <source src={videoSource} type="video/mp4" />
+                        Your browser does not support the video tag.
+                    </video>
                 )}
             </div>
             <div className="box-container">
@@ -128,6 +132,11 @@ function SnippingTool({ videoContainerRef, videoSource }) {
                     <div className="screenshot-container">
                         <h2>Screenshot</h2>
                         <img src={screenshot} alt="Screenshot" />
+                        {isConfirmVisible && (
+                            <button className="confirm-button" onClick={confirmSelection}>
+                                Confirm
+                            </button>
+                        )}
                     </div>
                 )}
                 {isScreenshotMode && (
