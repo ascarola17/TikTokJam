@@ -9,12 +9,15 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
+# Ensure there's no restrictive limit here
+FILE_UPLOAD_MAX_MEMORY_SIZE = 10485760
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -26,7 +29,6 @@ SECRET_KEY = "django-insecure-zz5c@+e(ifrp33d-85^_kl^(zc*$q%amgi#v38418omedjk!2c
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -40,7 +42,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'mytiktok',
     'corsheaders',
-    'api'
 ]
 
 MIDDLEWARE = [
