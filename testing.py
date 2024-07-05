@@ -6,7 +6,7 @@ import requests
 from dotenv import load_dotenv, dotenv_values
 
 # Set the environment variable ??
-#os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "C:\\Users\\Admin\\Desktop\\AI_EDGE\\snap-market-428419-cf3dcb6ba810.json"
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "C:\\Users\\Admin\\Desktop\\AI_EDGE\\snap-market-428419-cf3dcb6ba810.json"
 
 def closest_color(requested_color):
     min_colors = {}
@@ -65,12 +65,14 @@ def analyze_image(image_path):
     #vv removing duplicates
     caption = list(set(caption))
 
-    #print(junior_caption)
+    print(caption)
     #posting to Jr API 
     #make a post method
     json_response = json.dumps({
         "caption": caption
     })
+    print("this is the jso0n:")
+    print(json_response)
     #api call  
     # post_data = {'name': 'Gladys'}
     # response = requests.post('http://.com', data=post_data)
@@ -78,9 +80,6 @@ def analyze_image(image_path):
     #response = requests.post(url, data=data)
 
 
-    
-
-    #   pass as a json so he can do a .get
 
 # Provide the path to your local image file
 image_path = "C:\\Users\\Admin\\Desktop\\AI_EDGE\\tester_img.png"

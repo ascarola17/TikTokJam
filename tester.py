@@ -12,7 +12,6 @@ from . import views
 
 
 from django.views import View
-from .utils import load_model_and_tokenizer, process_image, generate_caption
 
 
 @csrf_exempt
