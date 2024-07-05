@@ -3,6 +3,7 @@ from google.cloud import vision_v1
 import webcolors
 import json
 import requests
+from dotenv import load_dotenv, dotenv_values
 
 # Set the environment variable ??
 #os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "C:\\Users\\Admin\\Desktop\\AI_EDGE\\snap-market-428419-cf3dcb6ba810.json"
@@ -26,6 +27,10 @@ def get_color_name(rgb_color):
     return closest_name
 
 def analyze_image(image_path):
+    #client = vision_v1.ImageAnnotatorClient()
+  
+
+    # Initialize the client with ClientOptions
     client = vision_v1.ImageAnnotatorClient()
 
     with open(image_path, 'rb') as image_file:
@@ -67,9 +72,9 @@ def analyze_image(image_path):
         "caption": caption
     })
     #api call  
-    post_data = {'name': 'Gladys'}
-    response = requests.post('http://.com', data=post_data)
-    content = response.content
+    # post_data = {'name': 'Gladys'}
+    # response = requests.post('http://.com', data=post_data)
+    # content = response.content
     #response = requests.post(url, data=data)
 
 
