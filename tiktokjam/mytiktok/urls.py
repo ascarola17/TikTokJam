@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import ImageCaptionView
+from .views import SerpApiSearchView
 
 urlpatterns = [
-  path('caption/', ImageCaptionView.as_view(), name='image-caption'),
+    path('serpapi_search/', SerpApiSearchView.as_view(), name='serpapi-search'),
 ]

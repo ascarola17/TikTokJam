@@ -24,7 +24,7 @@ router.register(r'items', ItemViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include(router.urls)),
+    path('', include(router.urls)),
     path('project/', include("api.urls")),
     path('', include("mytiktok.urls")),
 ]

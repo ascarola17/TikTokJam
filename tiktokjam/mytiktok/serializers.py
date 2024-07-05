@@ -6,6 +6,4 @@ class ItemSerializer(serializers.ModelSerializer):
         model = Item
         fields = '__all__'
 
-class ImageUploadSerializer(serializers.Serializer):
-    image = serializers.ImageField()
 
