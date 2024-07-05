@@ -1,0 +1,57 @@
+/* src/ProgressCards.css */
+body {
+    background-color: #100e17;
+    font-family: 'Open Sans', sans-serif;
+  }
+  
+  .container {
+    width: 100%;
+    display: flex;
+    justify-content: space-around; /* Distribute space between cards */
+    padding: 20px; /* Add some padding for spacing */
+    box-sizing: border-box;
+  }
+  
+  .card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 350px; /* Adjust height as needed */
+    width: calc(25% - 10px); /* Adjust width as needed */
+    background-color: #17141d;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(238, 29, 82, 0.6); /* Adjust shadow color and spread */
+    transition: 0.4s ease-out;
+    margin-bottom: 20px; /* Add margin between cards */
+    box-sizing: border-box;
+    overflow: hidden; /* Ensure content doesn't overflow the card's boundaries */
+  }
+  
+  .card:hover {
+    transform: translateY(-20px);
+    transition: 0.4s ease-out;
+  }
+  
+  .title {
+    color: white;
+    font-weight: 300;
+    margin-top: 15px;
+    font-size: 1.5rem; /* Increase font size */
+  }
+  
+  button {
+    font-family: Arial, Helvetica, sans-serif;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    margin-top: 10px;
+    border: none;
+    background-color: #EE1D52;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #ff4066;
+  }
+  

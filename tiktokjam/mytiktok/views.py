@@ -1,85 +1,68 @@
-from django.shortcuts import render
-
-# Create your views here.
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from .serializers import ImageUploadSerializer
 from rest_framework import viewsets
-from .models import Item
-from .serializers import ItemSerializer
-
+from mytiktok.models import Item
+from mytiktok.serializers import ItemSerializer
+from rest_framework import status
+from .serp_api import SerpApi
+import os
+from dotenv import load_dotenv, dotenv_values
 from django.http import JsonResponse
 import io
 from google.cloud import vision
 from django.views.decorators.csrf import csrf_exempt
 from . import views
-
-
 from django.views import View
-#from .utils import load_model_and_tokenizer, process_image, generate_caption
 
 
-@csrf_exempt
-def analyze_image(request):
-    if request.method != 'POST' or 'image' not in request.FILES:
-        return JsonResponse({'error': 'Invalid request or no image provided'}, status=400)
+class SerpApiSearchView(APIView):
+    def post(self, request, *args, **kwargs):
+        caption = request.data.get("caption")
+        load_dotenv()
+        if not caption:
+            return Response({"error": "Caption is required"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        try:
+            serp_api = SerpApi(api_key=os.environ["SERPAPI"])
+            search_results = serp_api.search_google(caption)
+            return Response({"search_results": search_results}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-    image_file = request.FILES['image']
-    image_content = image_file.read()
-
-    client = vision.ImageAnnotatorClient()
-    image = vision.Image(content=image_content)
-
-    response = client.annotate_image({
-        'image': image,
-        'features': [
-            {'type': vision.Feature.Type.LABEL_DETECTION},
-            {'type': vision.Feature.Type.LOGO_DETECTION},
-            {'type': vision.Feature.Type.OBJECT_LOCALIZATION},
-            {'type': vision.Feature.Type.WEB_DETECTION},
-            {'type': vision.Feature.Type.IMAGE_PROPERTIES}
-        ]
-    })
-
-    labels = [label.description for label in response.label_annotations]
-    logos = [logo.description for logo in response.logo_annotations]
-    objects = [obj.name for obj in response.localized_object_annotations]
-    web_entities = [entity.description for entity in response.web_detection.web_entities]
-    colors = [color.color for color in response.image_properties_annotation.dominant_colors.colors]
-
-    return JsonResponse({
-        'labels': labels,
-        'logos': logos,
-        'objects': objects,
-        'web_entities': web_entities,
-        'colors': colors
-    })
-
-
-
-
+        
+        
 class ItemViewSet(viewsets.ModelViewSet):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
 
-class ImageCaptionView(View):
-    def get(self, request):
-        # Get the image URL from the request
-        image_url = request.GET.get('image_url')
-        if not image_url:
-            return JsonResponse({'error': 'No image URL provided'}, status=400)
+'''
+Description: A generic viewset model to manipulation and permanently save
+image data to the database
+'''
+class ImageUploadViewSet(viewsets.ViewSet):
+    '''
+    Description: Retrieves image data from the front and check validity. 
+    If valid, then the image will save in a directory called 'media'
+    '''
+    def create(self, request):
+        print("Incoming request data:", request.data)
+        serializer = ImageUploadSerializer(data=request.data)
+        if serializer.is_valid():
+            image = serializer.validated_data['image']
+            #print(serializer)
+            
+            # Ensure the temp directory exists
+            temp_dir = os.path.join('media') #may remove temp
+            if not os.path.exists(temp_dir):
+                os.makedirs(temp_dir)
+            
+            # Save the image to the temp directory
+            image_path = os.path.join(temp_dir, image.name)
+            with open(image_path, 'wb+') as destination:
+                for chunk in image.chunks():
+                    destination.write(chunk)
 
-        # Load model and tokenizer
-        tokenizer, model = load_model_and_tokenizer()
-
-        # Process the image
-        image_tensor = process_image(image_url)
-
-        # Generate the caption
-        caption = generate_caption(image_tensor, tokenizer, model)
-
-        # Convert sets to lists if needed
-        if isinstance(caption, set):
-            caption = list(caption)
-
-        # Return the caption as JSON
-        return JsonResponse({'caption': caption}, safe=False)
-    
-
+            return Response({"message": "Image uploaded successfully"}, status=status.HTTP_201_CREATED)
+        print(serializer.errors)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
