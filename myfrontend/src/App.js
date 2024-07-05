@@ -48,7 +48,7 @@ function App() {
             <h2 className="main-product-result">Your Main Product Result</h2>
             <div className="image-and-cards-container">
                 <div className="image-container">
-                    <ImageReveal src="/images/image1.png" alt="Static Image" />
+                    <ImageReveal src="/images/image1 2.png" alt="Static Image" />
                     <h2 className="other-products">Some Other Products You Might Be Interested In</h2>
                     <ProgressCards />
                 </div>
