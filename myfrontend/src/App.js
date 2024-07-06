@@ -23,7 +23,7 @@ function App() {
         setTimeout(() => {
             if (resultsRef.current) {
                 // Calculate the total offset needed
-                const extraScroll = 200; // Adjust this value as needed
+                const extraScroll = 200;
                 const elementTop = resultsRef.current.getBoundingClientRect().top + window.pageYOffset;
                 const offsetPosition = elementTop - 0 + extraScroll;
                 
@@ -32,7 +32,7 @@ function App() {
                     behavior: 'smooth'
                 });
             }
-        }, 100); // Delay to ensure the DOM updates before scrolling
+        }, 100); 
     };
 
     const handleStartOver = () => {
@@ -42,7 +42,7 @@ function App() {
 
     return (
         <div className="App">
-            <h1 className="main-header">Snap Market</h1>
+            <h1 className="main-header">SnapMarket</h1>
             <div className="main-container">
                 {!isMediaUploaded && ( 
                     <div className="content-container">
