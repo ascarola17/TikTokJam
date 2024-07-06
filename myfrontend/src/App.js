@@ -4,7 +4,7 @@ import ImageReveal from './ImageReveal';
 import ProgressCards from './ProgressCards';
 import SnippingTool from './SnippingTool';
 import './App.css';
-import SearchComponent from './SearchComponent';
+
 
 function App() {
     const [isMediaUploaded, setIsMediaUploaded] = useState(false);
@@ -39,9 +39,7 @@ function App() {
         window.location.reload();
     };
 
-    /*
-    Added Search Component
-    */ 
+
     return (
         <div className="App">
             <h1 className="main-header">Snap Market</h1>
@@ -49,8 +47,7 @@ function App() {
                 {!isMediaUploaded && ( 
                     <div className="content-container">
                         <MediaUpload onUploadComplete={handleMediaUploadComplete} />
-                        <SearchComponent /> 
-                    </div>
+\                    </div>
                 )}
                 {isMediaUploaded && (
                     <SnippingTool
