@@ -26,7 +26,7 @@ router.register(r'items', ItemViewSet)
 router.register(r'upload', ImageUploadViewSet, basename='imageupload')
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/', include(router.urls)),
+    path('admin/', admin.site.urls), 
+    path('api/', include(router.urls)), # api/ -> items or upload
     path('', include("mytiktok.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
