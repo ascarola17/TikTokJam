@@ -1,10 +1,73 @@
 /* src/ImageReveal.css */
-.revealing-image {
+.image-reveal-body {
+  background-color: #100e17;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.image-reveal-container {
   width: 100%;
-  height: auto;
+  display: flex;
+  justify-content: center; /* Center the card horizontally */
+  padding: 20px; /* Add some padding for spacing */
+  box-sizing: border-box;
+}
+
+.image-reveal-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 80%; /* Adjust width as needed */
+  background-color: #17141d;
+  border-radius: 10px;
+  transition: opacity 0.5s ease-out, clip-path 0.5s ease-out;
   opacity: 0;
   clip-path: inset(45% 20% 45% 20%);
-  transition: opacity 0.5s ease-out, clip-path 0.5s ease-out;
-  margin-top: 20px; /* Ensure there's space above */
-  margin-bottom: 20px; /* Ensure there's space below */
+  box-sizing: border-box;
+  overflow: hidden; /* Ensure content doesn't overflow the card's boundaries */
+  margin-bottom: 20px; /* Add margin below for spacing */
+  padding: 20px; /* Add padding inside the card */
+}
+
+.image-reveal-left {
+  flex: 1; /* Take up half of the card */
+  display: flex;
+  flex-direction: column; /* Arrange text and button vertically */
+  justify-content: center; /* Center contents vertically */
+  align-items: center;
+  margin-right: 20px; /* Add some space between the left and right halves */
+}
+
+.product-title {
+  color: white;
+  font-weight: 300;
+  margin-bottom: 10px;
+  font-size: 1.5rem; /* Increase font size */
+}
+
+.purchase-button {
+  font-family: Arial, Helvetica, sans-serif;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  border: none;
+  background-color: #EE1D52;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.purchase-button:hover {
+  background-color: #61dafb;
+}
+
+.image-reveal-right {
+  flex: 1; /* Take up half of the card */
+  display: flex;
+  justify-content: center; /* Center the image within this half */
+  align-items: center;
+}
+
+.revealing-image {
+  max-width: 100%; /* Ensure the image doesn't exceed the width of its container */
+  height: auto;
+  object-fit: contain; /* Ensure the image scales properly */
 }

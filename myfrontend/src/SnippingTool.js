@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import html2canvas from 'html2canvas';
 import axios from 'axios';
 
-function SnippingTool({ videoContainerRef, videoSource }) {
+function SnippingTool({ videoContainerRef, videoSource, onScreenshotComplete }) {
     const [screenshot, setScreenshot] = useState(null);
     const [isSelecting, setIsSelecting] = useState(false);
     const [selection, setSelection] = useState({ startX: 0, startY: 0, endX: 0, endY: 0 });
     const [isScreenshotMode, setIsScreenshotMode] = useState(false);
+    const [isConfirmVisible, setIsConfirmVisible] = useState(false);
 
     const startSelection = (e) => {
         if (!isScreenshotMode) return;
@@ -31,6 +32,7 @@ function SnippingTool({ videoContainerRef, videoSource }) {
     const endSelection = () => {
         setIsSelecting(false);
         setIsScreenshotMode(false);
+        setIsConfirmVisible(true); // Show confirm button after selection
         captureSelection();
     };
 
@@ -44,8 +46,8 @@ function SnippingTool({ videoContainerRef, videoSource }) {
 
         const rect = containerElement.getBoundingClientRect();
         const { startX, startY, endX, endY } = selection;
-        const x = Math.max(rect.left, Math.min(startX, endX)) - rect.left;
-        const y = Math.max(rect.top, Math.min(startY, endY)) - rect.top;
+        const x = Math.max(0, Math.min(startX, endX) - rect.left);
+        const y = Math.max(0, Math.min(startY, endY) - rect.top);
         const width = Math.min(rect.width, Math.abs(endX - startX));
         const height = Math.min(rect.height, Math.abs(endY - startY));
 
@@ -54,13 +56,13 @@ function SnippingTool({ videoContainerRef, videoSource }) {
             return;
         }
 
+        console.log('Selection coordinates:', { x, y, width, height });
+
         html2canvas(containerElement, {
             x,
             y,
             width,
             height,
-            logging: true,
-            useCORS: true,
         }).then((canvas) => {
             canvas.toBlob((blob) => {
                 const file = new File([blob], 'screenshot.png', { type: 'image/png' });
@@ -91,6 +93,24 @@ function SnippingTool({ videoContainerRef, videoSource }) {
             console.error('Error sending image to backend:', error);
         });
     };
+        const confirmSelection = () => {
+        if (screenshot) {
+            const containerElement = videoContainerRef.current;
+            html2canvas(containerElement, {
+                x: selection.startX,
+                y: selection.startY,
+                width: selection.endX - selection.startX,
+                height: selection.endY - selection.startY,
+            }).then((canvas) => {
+                canvas.toBlob((blob) => {
+                    sendScreenshotToBackend(blob);
+                    onScreenshotComplete(); // Call the onScreenshotComplete prop
+                }, 'image/png');
+            }).catch((error) => {
+                console.error('Screenshot capture failed', error);
+            });
+        }
+    };
 
     const initiateScreenshotMode = () => {
         setIsScreenshotMode(true);
@@ -116,6 +136,11 @@ function SnippingTool({ videoContainerRef, videoSource }) {
                     <div className="screenshot-container">
                         <h2>Screenshot</h2>
                         <img src={screenshot} alt="Screenshot" />
+                        {isConfirmVisible && (
+                            <button className="confirm-button" onClick={confirmSelection}>
+                                Confirm
+                            </button>
+                        )}
                     </div>
                 )}
                 {isScreenshotMode && (
