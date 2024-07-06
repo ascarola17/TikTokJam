@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+/*
+Description: Retrieving from SerpApi function from backend
+Note: Check if this works and test after Raul fixes his stuff
+*/ 
 const SearchComponent = ({ onSearchComplete }) => {
     const [caption, setCaption] = useState('');
     const [error, setError] = useState(null);

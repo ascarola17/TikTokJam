@@ -25,7 +25,10 @@ const ImageReveal = ({ src, alt }) => {
       console.warn('ViewTimeline API is not supported in this browser.');
     }
   }, []);
-
+    /*
+    Description: Getting image from the backend and displaying it in the main 
+    container
+    */
   return (
     <div className="image-reveal-container">
       <div className="image-reveal-card" ref={cardRef}>
@@ -34,6 +37,8 @@ const ImageReveal = ({ src, alt }) => {
           <button className="purchase-button">Purchase</button>
         </div>
         <div className="image-reveal-right">
+          
+
           <img src={src} alt={alt} className="revealing-image" />
         </div>
       </div>
