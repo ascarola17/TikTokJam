@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import MediaUpload from './MediaUpload';
 import ImageReveal from './ImageReveal';
 import ProgressCards from './ProgressCards';
@@ -12,6 +12,8 @@ function App() {
     const [showResults, setShowResults] = useState(false);
     const videoContainerRef = useRef(null);
     const resultsRef = useRef(null); // Reference for the results section
+
+    const [item, setItem] = useState(null);
 
     const handleMediaUploadComplete = (file) => { 
         setVideoSource(URL.createObjectURL(file));
@@ -39,6 +41,23 @@ function App() {
         window.location.reload();
     };
 
+    const fetchProcessedData = async () => {
+        try {
+            const response = await fetch('http://localhost:8000/serpapi_search/');
+            console.log(response)
+            const data = await response.json();
+            setItem(data.search_results[0]); // Get the first item
+        } catch (error) {
+            console.error('Error fetching processed data:', error);
+        }
+    };
+
+    useEffect(() => {
+        if (showResults) {
+            fetchProcessedData(); // Fetch item data when showResults is true
+        }
+    }, [showResults]);
+
 
     return (
         <div className="App">
@@ -65,7 +84,11 @@ function App() {
                     <h2 className="main-product-result">Your Main Product Result</h2>
                     <div className="image-and-cards-container">
                         <div className="image-container">
-                            <ImageReveal src="/images/image1.png" alt="Static Image" />
+                        {item ? (
+                                <ImageReveal src={item.thumbnail} alt={item.title} />
+                            ) : (
+                                <p>Loading...</p>
+                            )}
                             <h2 className="other-products">Some Other Products You Might Be Interested In</h2>
                             <ProgressCards />
                         </div>

@@ -1,8 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import './ImageReveal.css';
 
+
 const ImageReveal = ({ src, alt }) => {
   const cardRef = useRef(null);
+
 
   useEffect(() => {
     if ('animate' in document.createElement('div') && 'ViewTimeline' in window) {
@@ -29,6 +31,7 @@ const ImageReveal = ({ src, alt }) => {
     Description: Getting image from the backend and displaying it in the main 
     container
     */
+    
   return (
     <div className="image-reveal-container">
       <div className="image-reveal-card" ref={cardRef}>
