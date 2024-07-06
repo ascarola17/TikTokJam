@@ -40,7 +40,7 @@ function App() {
 
     return (
         <div className="App">
-            <h1 className="main-header">Snap Market</h1>
+            <h1 className="main-header">SnapMarket</h1>
             <div className="main-container">
                 {!isMediaUploaded && ( 
                     <div className="content-container">

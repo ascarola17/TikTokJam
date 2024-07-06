@@ -72,7 +72,7 @@ html, body, #root {
 }
 
 .screenshot-button:hover {
-  background-color: #ff4066;
+  background-color: #69C9D0;
 }
 
 .button-container {
@@ -132,7 +132,7 @@ html, body, #root {
 }
 
 .main-header {
-  color: #1d6aee;
+  color: #69C9D0;
   text-align: center;
   margin-bottom: 55px;
   font-size: 2.5rem;
