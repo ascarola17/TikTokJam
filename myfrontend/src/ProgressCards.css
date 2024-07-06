@@ -58,7 +58,7 @@ body {
   
   @media (max-width: 1024px) {
     .card {
-      width: calc(33% - 20px); /* Adjust width for medium screens */
+      width: calc(33% - 20px); 
     }
   }
   
@@ -70,7 +70,7 @@ body {
   
     .card {
       width: 80%; /* Full width for small screens */
-      margin-bottom: 20px; /* Add margin between stacked cards */
+      margin-bottom: 38px; 
     }
   }
   

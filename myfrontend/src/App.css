@@ -33,9 +33,10 @@ html, body, #root {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 60%;
-  margin-bottom: 80px;
-  position: relative;
+  justify-content: center; 
+  width: 100%;
+  max-width: 500px; 
+  margin: auto; 
 }
 
 .snipping-tool-container {
@@ -53,7 +54,7 @@ html, body, #root {
   height: auto;
   position: relative;
   z-index: 1;
-  margin-bottom: 20px; /* Ensure there's space below the video */
+  margin-bottom: 20px;
 }
 
 .box-container {
