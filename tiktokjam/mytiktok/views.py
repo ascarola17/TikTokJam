@@ -19,7 +19,9 @@ from google.cloud import vision_v1
 import webcolors
 import json
 import requests
-from transformers import pipeline
+#from transformers import pipelinep
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "snap-market-428419-cf3dcb6ba810.json"
+
 
 
 class SerpApiSearchView(APIView):
@@ -108,13 +110,22 @@ Description: analyze_image takes in an image and utilizies the Google Cloud API 
     It will then return a json for the serpapi to use.
 """
 def analyze_image( image_path):
+    #
+    # load_dotenv()
+    # api_key = os.environ['GOOGLE_API_KEY']
 
-    # Initialize the client with ClientOptions
+    # if not api_key:
+    #     raise ValueError("GOOGLE_API_KEY not found in environment variables.")
+
+    # # Initialize the client with ClientOptions
+    # client_options = {"api_key": api_key}
+    # print(os.environ['GOOGLE_API_KEY'])
     client = vision_v1.ImageAnnotatorClient()
-
+    # print("after client")
     with open(image_path, 'rb') as image_file:
         content = image_file.read()
-
+        
+    print("b4 img")
     # Create an AnnotateImageRequest object
     image = vision_v1.Image(content=content)
     features = [
@@ -123,11 +134,12 @@ def analyze_image( image_path):
         vision_v1.Feature(type_=vision_v1.Feature.Type.IMAGE_PROPERTIES),
         vision_v1.Feature(type_=vision_v1.Feature.Type.TEXT_DETECTION),
     ]
+    print("b4 req")
     request = vision_v1.AnnotateImageRequest(image=image, features=features)
-
+    print("b4 resp")
     # Make the API call using batch_annotate_images()
     response = client.batch_annotate_images(requests=[request])
-
+    print("after response")
     # Retrieve annotations
     logos = [logo.description for logo in response.responses[0].logo_annotations]
     web_entities = [entity.description for entity in response.responses[0].web_detection.web_entities]
