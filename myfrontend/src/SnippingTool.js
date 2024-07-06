@@ -75,7 +75,7 @@ function SnippingTool({ videoContainerRef, videoSource, onScreenshotComplete }) 
         });
     };
 
-    const sendScreenshotToBackend = (blob) => {
+    const sendScreenshotToBackend = async (file) => {
         const formData = new FormData();
         formData.append('image', new File([blob], 'screenshot.png', { type: 'image/png' }));  // Ensure key name matches backend
 
@@ -83,7 +83,19 @@ function SnippingTool({ videoContainerRef, videoSource, onScreenshotComplete }) 
         for (let pair of formData.entries()) {
             console.log(pair[0]+ ', ' + pair[1]); 
         }
-
+        // const caption = {
+        //     "caption": 'Red Dog'
+        // }
+        // const response = await fetch('http://localhost:8000/serpapi_search/', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify({ caption }), // Send the fetched caption in the body
+        // });
+        // const data = await response.json();
+        // console.log(data)
+        // console.log(response)
         axios.post('http://localhost:8000/api/upload/', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'

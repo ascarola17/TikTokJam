@@ -73,10 +73,10 @@ class ImageUploadViewSet(viewsets.ViewSet):
                     destination.write(chunk)
             
             print("before analyze img")
-            analyze_image(image_path)
+            response = analyze_image(image_path)
             print("after")
             
-            return Response({"message": "Image uploaded successfully"}, status=status.HTTP_201_CREATED)
+            return Response(response, status=status.HTTP_201_CREATED)
         print(serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
@@ -183,6 +183,7 @@ def analyze_image( image_path):
     
     response = requests.post('http://localhost:8000/serpapi_search/', data=json_response)
     print(response)
+    return response
     # content = response.content
     #response = requests.post(url, data=data)
 
