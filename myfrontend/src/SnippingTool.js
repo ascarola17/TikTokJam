@@ -8,6 +8,7 @@ function SnippingTool({ videoContainerRef, videoSource, onScreenshotComplete }) 
     const [selection, setSelection] = useState({ startX: 0, startY: 0, endX: 0, endY: 0 });
     const [isScreenshotMode, setIsScreenshotMode] = useState(false);
     const [isConfirmVisible, setIsConfirmVisible] = useState(false);
+    const [screenshotBlob, setScreenshotBlob] = useState(null);
 
     const startSelection = (e) => {
         if (!isScreenshotMode) return;
@@ -67,16 +68,16 @@ function SnippingTool({ videoContainerRef, videoSource, onScreenshotComplete }) 
             canvas.toBlob((blob) => {
                 const file = new File([blob], 'screenshot.png', { type: 'image/png' });
                 setScreenshot(URL.createObjectURL(file));
-                sendScreenshotToBackend(file);
+                setScreenshotBlob(blob); // Save the blob for later use
             }, 'image/png');
         }).catch((error) => {
             console.error('Screenshot capture failed', error);
         });
     };
 
-    const sendScreenshotToBackend = (file) => {
+    const sendScreenshotToBackend = (blob) => {
         const formData = new FormData();
-        formData.append('image', file);  // Ensure key name matches backend
+        formData.append('image', new File([blob], 'screenshot.png', { type: 'image/png' }));  // Ensure key name matches backend
 
         // Log the FormData to ensure it contains the expected data
         for (let pair of formData.entries()) {
@@ -93,22 +94,11 @@ function SnippingTool({ videoContainerRef, videoSource, onScreenshotComplete }) 
             console.error('Error sending image to backend:', error);
         });
     };
-        const confirmSelection = () => {
-        if (screenshot) {
-            const containerElement = videoContainerRef.current;
-            html2canvas(containerElement, {
-                x: selection.startX,
-                y: selection.startY,
-                width: selection.endX - selection.startX,
-                height: selection.endY - selection.startY,
-            }).then((canvas) => {
-                canvas.toBlob((blob) => {
-                    sendScreenshotToBackend(blob);
-                    onScreenshotComplete(); // Call the onScreenshotComplete prop
-                }, 'image/png');
-            }).catch((error) => {
-                console.error('Screenshot capture failed', error);
-            });
+
+    const confirmSelection = () => {
+        if (screenshotBlob) {
+            sendScreenshotToBackend(screenshotBlob);
+            onScreenshotComplete(); // Call the onScreenshotComplete prop
         }
     };
 
