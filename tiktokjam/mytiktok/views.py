@@ -14,12 +14,9 @@ from google.cloud import vision
 from django.views.decorators.csrf import csrf_exempt
 from . import views
 from django.views import View
-#raul imports
 from google.cloud import vision_v1
-import webcolors
 import json
 import requests
-#from transformers import pipelinep
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "snap-market-428419-cf3dcb6ba810.json"
 
 
@@ -27,15 +24,21 @@ os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "snap-market-428419-cf3dcb6ba810.
 class SerpApiSearchView(APIView):
     def post(self, request, *args, **kwargs):
         caption = request.data.get("caption")
+        # Grabs the captions from the analyze_image method
         load_dotenv()
+        # Loads the file for the SERPAPI key
         if not caption:
+        # Checks to see if I recieved caption
             return Response({"error": "Caption is required"}, status=status.HTTP_400_BAD_REQUEST)
         
         try:
             serp_api = SerpApi(api_key=os.environ["SERPAPI"])
+            # Givens the API key and sets the API params 
             search_results = serp_api.search_google(caption)
+            # Sends the captions to the API, the API searches in google shopping with those captoins and returns the top 5 products
             print(search_results)
             return Response({"search_results": search_results}, status=status.HTTP_200_OK)
+            # Returns the top 5 products in as json
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
@@ -81,51 +84,18 @@ class ImageUploadViewSet(viewsets.ViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 
-
-"""
-Description: Helper methods for the webcolors 1.11.1 methods. These will allow for color descriptors 
-    closest_colors provides the neareset colors in hex
-    get_color_name obtains the english color name
-"""
-def closest_color( requested_color):
-    min_colors = {}
-    for key, name in webcolors.CSS3_HEX_TO_NAMES.items():
-        r_c, g_c, b_c = webcolors.hex_to_rgb(key)
-        rd = (r_c - requested_color.red) ** 2
-        gd = (g_c - requested_color.green) ** 2
-        bd = (b_c - requested_color.blue) ** 2
-        min_colors[(rd + gd + bd)] = name
-    return min_colors[min(min_colors.keys())]
-
-def get_color_name( rgb_color):
-    try:
-        hex_code = webcolors.rgb_to_hex((int(rgb_color.red), int(rgb_color.green), int(rgb_color.blue)))
-        closest_name = webcolors.hex_to_name(hex_code)
-    except ValueError:
-        closest_name = closest_color(rgb_color)
-    return closest_name
-
 """
 Description: analyze_image takes in an image and utilizies the Google Cloud API and certain features to obtain key words and descriptors.
     It will then return a json for the serpapi to use.
 """
+
 def analyze_image( image_path):
-    #
-    # load_dotenv()
-    # api_key = os.environ['GOOGLE_API_KEY']
-
-    # if not api_key:
-    #     raise ValueError("GOOGLE_API_KEY not found in environment variables.")
-
-    # # Initialize the client with ClientOptions
-    # client_options = {"api_key": api_key}
-    # print(os.environ['GOOGLE_API_KEY'])
+    
     client = vision_v1.ImageAnnotatorClient()
     # print("after client")
     with open(image_path, 'rb') as image_file:
         content = image_file.read()
         
-    print("b4 img")
     # Create an AnnotateImageRequest object
     image = vision_v1.Image(content=content)
     features = [
@@ -134,12 +104,12 @@ def analyze_image( image_path):
         vision_v1.Feature(type_=vision_v1.Feature.Type.IMAGE_PROPERTIES),
         vision_v1.Feature(type_=vision_v1.Feature.Type.TEXT_DETECTION),
     ]
-    print("b4 req")
+
     request = vision_v1.AnnotateImageRequest(image=image, features=features)
-    print("b4 resp")
+
     # Make the API call using batch_annotate_images()
     response = client.batch_annotate_images(requests=[request])
-    print("after response")
+
     # Retrieve annotations
     logos = [logo.description for logo in response.responses[0].logo_annotations]
     web_entities = [entity.description for entity in response.responses[0].web_detection.web_entities]
@@ -185,6 +155,4 @@ def analyze_image( image_path):
     print(response)
     print(type(response))
     return response
-    # content = response.content
-    #response = requests.post(url, data=data)
-
+    
