@@ -28,7 +28,7 @@ make install
 npm test
 ```
 
-#Frontend Dependencies
+# Frontend Dependencies
 Make sure Node.js and npm are installed. You can download and install them from [nodejs.org](https://nodejs.org/).
 
 Install the required npm packages using the following commands:
@@ -75,7 +75,7 @@ pip install google-search-results
 pip install python-dotenv
 
 ```
-#Run the servers:
+# Run the servers:
 Must be seperate terminals
 ```
 Frontend:
