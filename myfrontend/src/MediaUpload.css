@@ -1,32 +1,41 @@
 .MediaUpload {
     display: flex;
-    flex-direction:column;
+    flex-direction: column;
     align-items: center;
-    justify-content:baseline;
-    width: 80vw;  /* Responsive width */
-    max-width: 300px;  /* Maximum width */
-    height: calc(80vw * 4 / 3); /* Maintain 3:4 aspect ratio */
-    max-height: 400px; /* Maximum height */
+    justify-content: baseline;
+    width: 80vw;  
+    max-width: 300px;  
+    height: calc(80vw * 4 / 3);
+    max-height: 400px; 
     background-color: #69696996;
     padding: 20px;
     box-sizing: border-box;
-    margin: auto;  /* Center the container */
-    border-radius: 10px; /* Add border radius for better visual effect */
-    box-shadow: 0 0 15px 5px rgba(105, 201, 208, 0.6); /* Initial shadow */
-    transition: transform 0.3s, box-shadow 0.3s; /* Transition properties */
+    margin: auto; 
+    border-radius: 10px; 
+    box-shadow: 0 0 15px 5px rgba(105, 201, 208, 0.6);
+    transition: transform 0.3s, box-shadow 0.3s;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    z-index: 1; /* Ensure this is below HandleLink */
+    z-index: 1; 
 }
 
 .video-container {
     width: 100%;
     margin-top: 20px;
+    display: 50px;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%; /* Ensure it doesn't exceed the container */
 }
 
 .video-container video {
-    width: 100%;
+    max-width: 100%;
+    max-height: 100%; /* Ensure it doesn't exceed the container */
+    width: auto;
     height: auto;
+    justify-content: center;
     border-radius: 10px;
+    display: 40px;
+    object-fit: contain; /* Maintain aspect ratio */
 }
 
 button {
@@ -50,7 +59,7 @@ button:disabled {
 }
 
 .MediaUpload:hover {
-    transform: scale(1.05); /* Slightly scale up the element */
+    transform: scale(1.05);
     box-shadow: 0 0 25px 10px rgba(105, 201, 208, 0.8); /* Intensify the shadow */
 }
 

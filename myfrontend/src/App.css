@@ -2,14 +2,13 @@ html, body, #root {
   height: 100%;
   margin: 0;
   padding: 0;
-  background: #1C1C1C;  /* New background color */
-  min-height: 100vh;    /* Ensure the component takes at least the full height of the viewport */
-  display: flex;        /* Use flexbox to center content */
+  background: #1C1C1C;
+  min-height: 100vh;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-
 
 .App {
   display: flex;
@@ -17,60 +16,188 @@ html, body, #root {
   align-items: center;
   justify-content: flex-start;
   min-height: 100vh;
- /* background-color: #121212; /* Example background color for dark mode */
   padding: 20px;
   box-sizing: border-box;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  justify-content: center;
 }
 
 .content-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center; 
   width: 100%;
-  max-width: 800px; /* Adjust based on your layout needs */
+  max-width: 500px; 
+  margin: auto; 
 }
 
-.MediaUpload {
-  margin-bottom: 20px; /* Add some space between MediaUpload and HandleLink */
+.start-over-button {
+  padding: 10px 20px;
+  background-color: #EE1D52;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
 }
 
-.HandleLink {
-  width: 100%;
+.start-over-button:hover {
+  background-color: #69C9D0;
 }
 
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #72819f;
-  min-height: 100vh;
+.snipping-tool-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+}
+
+.video-container {
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: orange;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 20px;
 }
 
-.App-link {
-  color: #61dafb;
+.box-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.screenshot-button {
+  padding: 10px 20px;
+  background-color: #EE1D52;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.screenshot-button:hover {
+  background-color: #69C9D0;
+}
+
+.button-container {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.confirm-button {
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 20px;
+}
+
+.confirm-button:hover {
+  background-color: #218838;
+}
+
+.selection-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.25);
+  cursor: crosshair;
+  z-index: 1000;
+}
+
+.selection-box {
+  position: absolute;
+  border: 2px dashed #000;
+  background: rgba(255, 255, 255, 0.5);
+  z-index: 1001;
+}
+
+.screenshot-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.screenshot-container img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.error {
+  color: red;
+  margin-top: 10px;
+}
+
+.main-header {
+  color: #69C9D0;
+  text-align: center;
+  margin-bottom: 55px;
+  font-size: 2.5rem;
+  font-family: 'Roboto', sans-serif;
+  text-rendering: geometricPrecision;
+}
+
+h2 {
+  margin: 20px 0;
+  color: white;
+  text-align: center;
+}
+
+.main-product-result {
+  margin-top: 300px;
+}
+
+.image-and-cards-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.image-container {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.revealing-image {
+  width: 100%;
+  height: auto;
+  opacity: 1;
+  clip-path: inset(0% 0% 0% 0%);
+  transition: opacity 0.5s ease-out, clip-path 0.5s ease-out;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.other-products {
+  text-align: center;
+}
+
+.progress-cards-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  padding: 20px;
+  box-sizing: border-box;
+  margin-top: 20px;
 }
