@@ -46,9 +46,9 @@ function App() {
                             top: offsetPosition,
                             behavior: 'smooth'
                         });
-                    }, 500); 
+                    }, 100); 
                 }
-            }, 500); 
+            }, 100); 
         }
     }, [showResults, isLoading]);
 
