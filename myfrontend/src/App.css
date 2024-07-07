@@ -39,6 +39,20 @@ html, body, #root {
   margin: auto; 
 }
 
+.start-over-button {
+  padding: 10px 20px;
+  background-color: #EE1D52;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.start-over-button:hover {
+  background-color: #69C9D0;
+}
+
 .snipping-tool-container {
   display: flex;
   flex-direction: column;
@@ -90,6 +104,7 @@ html, body, #root {
   border-radius: 5px;
   cursor: pointer;
   font-size: 1rem;
+  margin-top: 20px;
 }
 
 .confirm-button:hover {

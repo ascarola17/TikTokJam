@@ -1,8 +1,5 @@
 from django.db import models
-from transformers import VisionEncoderDecoderModel, ViTFeatureExtractor, AutoTokenizer
 from PIL import Image
-import torch
-
 
 #Create your models here
 

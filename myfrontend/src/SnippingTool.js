@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import html2canvas from 'html2canvas';
 import axios from 'axios';
 
-function SnippingTool({ videoContainerRef, videoSource, onScreenshotComplete }) {
+function SnippingTool({ videoContainerRef, videoSource, onScreenshotComplete, onProcessComplete }) {
     const [screenshot, setScreenshot] = useState(null);
     const [isSelecting, setIsSelecting] = useState(false);
     const [selection, setSelection] = useState({ startX: 0, startY: 0, endX: 0, endY: 0 });
@@ -77,31 +77,17 @@ function SnippingTool({ videoContainerRef, videoSource, onScreenshotComplete }) 
 
     const sendScreenshotToBackend = async (file) => {
         const formData = new FormData();
-        formData.append('image', new File([blob], 'screenshot.png', { type: 'image/png' }));  // Ensure key name matches backend
+        formData.append('image', new File([file], 'screenshot.png', { type: 'image/png' }));
 
-        // Log the FormData to ensure it contains the expected data
-        for (let pair of formData.entries()) {
-            console.log(pair[0]+ ', ' + pair[1]); 
-        }
-        // const caption = {
-        //     "caption": 'Red Dog'
-        // }
-        // const response = await fetch('http://localhost:8000/serpapi_search/', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify({ caption }), // Send the fetched caption in the body
-        // });
-        // const data = await response.json();
-        // console.log(data)
-        // console.log(response)
         axios.post('http://localhost:8000/api/upload/', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
         }).then(response => {
             console.log('Image successfully sent to backend:', response.data);
+            const data = response.data.join('');
+            const parseData = JSON.parse(data);
+            onProcessComplete(parseData); // Pass processed data to App
         }).catch(error => {
             console.error('Error sending image to backend:', error);
         });

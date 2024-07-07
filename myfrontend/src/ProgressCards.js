@@ -1,28 +1,21 @@
 import React from 'react';
 import './ProgressCards.css';
 
-const ProgressCards = () => {
+const ProgressCards = ({ products }) => {
   return (
-    <div className="container">
-      <div className="card">
-        <h3 className="title">Product 2</h3>
-        <button className>Purchase</button>
-      </div>
-      <div className="card">
-        <h3 className="title">Product 3</h3>
-        <button className>Purchase</button>
-      </div>
-      <div className="card">
-        <h3 className="title">Product 4</h3>
-        <button className>Purchase</button>
-      </div>
-      <div className="card">
-        <h3 className="title">Product 5</h3>
-        <button className>Purchase</button>
-      </div>
+    <div className="progress-cards-container">
+      {products.map((product, index) => (
+        <div className="progress-card" key={index}>
+          <h3 className="progress-card-title">{product.title}</h3>
+          <div className="progress-image-container">
+            <img src={product.thumbnail} alt={product.title} className="progress-product-image" />
+          </div>
+          <p className="progress-product-price">{product.price}</p>
+          <a href={product.link} className="progress-purchase-button">Purchase</a>
+        </div>
+      ))}
     </div>
   );
 }
 
 export default ProgressCards;
-

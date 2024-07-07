@@ -183,6 +183,7 @@ def analyze_image( image_path):
     
     response = requests.post('http://localhost:8000/serpapi_search/', data=json_response)
     print(response)
+    print(type(response))
     return response
     # content = response.content
     #response = requests.post(url, data=data)

@@ -1,10 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import './ImageReveal.css';
 
-
-const ImageReveal = ({ src, alt }) => {
+const ImageReveal = ({ src, alt, title, price, link }) => {
   const cardRef = useRef(null);
-
 
   useEffect(() => {
     if ('animate' in document.createElement('div') && 'ViewTimeline' in window) {
@@ -27,21 +25,16 @@ const ImageReveal = ({ src, alt }) => {
       console.warn('ViewTimeline API is not supported in this browser.');
     }
   }, []);
-    /*
-    Description: Getting image from the backend and displaying it in the main 
-    container
-    */
-    
+
   return (
     <div className="image-reveal-container">
       <div className="image-reveal-card" ref={cardRef}>
         <div className="image-reveal-left">
-          <h3 className="product-title">Product 1</h3>
-          <button className="purchase-button">Purchase</button>
+          <h3 className="product-title">{title}</h3>
+          <p className="product-price">{price}</p>
+          <a href={link} className="purchase-button">Purchase</a>
         </div>
         <div className="image-reveal-right">
-          
-
           <img src={src} alt={alt} className="revealing-image" />
         </div>
       </div>
