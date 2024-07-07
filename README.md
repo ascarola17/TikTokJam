@@ -7,16 +7,16 @@ SnapMarket revolutionizes how users interact with product information within vid
 
 ## Usage example
 
-####Home Improvement Videos
+#### Home Improvement Videos
 Imagine you are watching a home improvement video on YouTube and you want to find the exact or similar power drill the presenter is using. SnapMarket makes this easy:
 
-####Capture Screenshot:
+#### Capture Screenshot:
 While watching the video, users can capture a screenshot of the moment when the power drill is visible.
-####Generate Description:
+#### Generate Description:
 Using the Google Cloud Vision API, SnapMarket generates a detailed description of the power drill from the screenshot.
-####Search Products:
+#### Search Products:
 SnapMarket uses this description to search for similar power drills online through the SerpApi.
-####Compare Products:
+#### Compare Products:
 Results are displayed, allowing you to compare prices, brands, and reviews all within the SnapMarket interface.
 
 ## Development setup
