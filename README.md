@@ -102,10 +102,10 @@ This is a small tutorial regarding how to use the API key with the Google Vision
 * After setting up the service account, click on the account and go to the "Keys" tab
   * Create new key
   * select JSON type
-* From here the json will be downloaded into your personal device. If the json is lost, a new API key will have to be created.  However, in order to utilize this, make sure the json file is inside of the backend folder(tiktokjam). Do not share the json file publically.
+* From here the json will be downloaded into your personal device. If the json is lost, a new API key will have to be created.  However, in order to utilize this, make sure the json file is inside of the backend folder(tiktokjam/mytiktok) and it needs to be named "snap-market-428419-cf3dcb6ba810.json". Do not share the json file publically.
 
 ### SerpApi Help
-* Create a .env file inside of the API application "tiktokjam"
+* Create a .env file inside of the backend folder(tiktokjam/mytiktok)
 * Go to [serpapi.com](https://serpapi.com/)
 * Register an account if you don't have one already and fill out the necessary information (You must verify phone number and email)
 * Select the plan you want (We used the free plan)
